@@ -1,0 +1,10 @@
+.theBody{
+    /* margin-top: 25px; */
+    height: 90vh;
+    width: 400px;
+    background-color: aqua;
+    position: relative;
+    top: 25px;
+    left: 50%;
+    transform: translate(-50%);
+}
