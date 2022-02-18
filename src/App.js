@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-import "./App.css";
+// import "./App.css";
 
 function App() {
-  const [weather, setweather] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [weather, setweather] = useState(null);
 
   useEffect(() => {
-    async function getweather() {
+    async function getMovies() {
       try {
         let response = await fetch(
           "https://weatherapi-com.p.rapidapi.com/current.json?q=102.89.34.220",
@@ -29,25 +29,63 @@ function App() {
 
         let data = await response.json();
         setweather(data);
-        console.log(data);
-        setError(null);
       } catch (err) {
         setError(err.message);
+        setLoading(false);
       } finally {
         setLoading(false);
       }
     }
-    getweather();
+    getMovies();
   }, []);
+
+  useEffect(() => {
+    weather && console.log(weather);
+  }, [weather]);
 
   return (
     <div className="App">
-      {/* {[weather].map(({current, location}) => (
-     <h1>{location.name}</h1>
-   ))} */}
-
       <div className="theBody">
-        
+        {loading && <div>A moment please...</div>}
+
+        {error && <div>{error}</div>}
+
+        {!loading && !error && weather && <WeatherDisplay data={weather} />}
+
+        {/* ======================================================= */}
+      </div>
+    </div>
+  );
+}
+
+function WeatherDisplay(props) {
+  let { location, current } = props.data;
+
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="col">
+          <span id="state">{location.name}, </span>
+          <span id="country">{location.country} </span>
+          <span id="date">{location.localtime}</span>
+          <img src={current.condition.icon} id="icon" />
+          <span id="iconText">{current.condition.text}</span>
+        </div>
+
+        <div className="col">
+          <span id="temperature">{Math.floor(current.temp_c)}&deg; </span>
+          <span id="subTemp">
+            {Math.floor(current.feelslike_c)}&deg; /{" "}
+            {Math.floor(current.feelslike_f)}&deg;
+          </span>
+        </div>
+      </div>
+
+      <div className="updates">
+        <div className="box"></div>
+        <div className="box"></div>
+        <div className="box"></div>
+        <div className="box"></div>
       </div>
     </div>
   );
