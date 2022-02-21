@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import SportUpdate from "./components/SportUpdate";
+import loader from "./loader.gif"
 // import "./App.css";
 
 function App() {
@@ -9,17 +11,13 @@ function App() {
   useEffect(() => {
     async function getMovies() {
       try {
-        let response = await fetch(
-          "https://weatherapi-com.p.rapidapi.com/current.json?q=102.89.34.220",
-          {
-            method: "GET",
-            headers: {
-              "x-rapidapi-host": "weatherapi-com.p.rapidapi.com",
-              "x-rapidapi-key":
-                "9585f8a376mshf08929124c822fep1573b4jsnf2b630ebc68b",
-            },
+        let response = await fetch("https://weatherapi-com.p.rapidapi.com/current.json?q=uturu", {
+          "method": "GET",
+          "headers": {
+            "x-rapidapi-host": "weatherapi-com.p.rapidapi.com",
+            "x-rapidapi-key": "9585f8a376mshf08929124c822fep1573b4jsnf2b630ebc68b"
           }
-        );
+        })
 
         if (!response.ok) {
           throw new Error(
@@ -39,14 +37,10 @@ function App() {
     getMovies();
   }, []);
 
-  useEffect(() => {
-    weather && console.log(weather);
-  }, [weather]);
-
   return (
     <div className="App">
       <div className="theBody">
-        {loading && <div>A moment please...</div>}
+        {loading && <h1>loading...</h1>}
 
         {error && <div>{error}</div>}
 
@@ -58,6 +52,7 @@ function App() {
   );
 }
 
+
 function WeatherDisplay(props) {
   let { location, current } = props.data;
 
@@ -65,8 +60,8 @@ function WeatherDisplay(props) {
     <div className="container">
       <div className="row">
         <div className="col">
-          <span id="state">{location.name}, </span>
-          <span id="country">{location.country} </span>
+          <span id="state">{location.name} </span>
+          <span id="country">{location.country}</span>
           <span id="date">{location.localtime}</span>
           <img src={current.condition.icon} id="icon" />
           <span id="iconText">{current.condition.text}</span>
@@ -81,12 +76,7 @@ function WeatherDisplay(props) {
         </div>
       </div>
 
-      <div className="updates">
-        <div className="box"></div>
-        <div className="box"></div>
-        <div className="box"></div>
-        <div className="box"></div>
-      </div>
+      <SportUpdate />
     </div>
   );
 }

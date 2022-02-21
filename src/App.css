@@ -61,7 +61,6 @@ body {
 }
 
 #temperature {
-  /* color: white; */
   color: transparent;
   -webkit-background-clip: text;
   background-image: linear-gradient(119deg, rgb(85, 55, 151), rgb(44, 28, 76));
@@ -80,11 +79,26 @@ body {
 .updates{
   margin-top: 40px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 .box{
-  height: 130px;
-  width: 150px;
+  height: 147px;
+  width: 167px;
+  border-radius: 5px;
+  text-align: center;
   background-color: rgba(47, 30, 81, 0.507);
+  color: rgb(153, 149, 149);
+}
+
+.box:not(:first-child){
+  margin-left: 10px;
+}
+
+#startTime{
+  color: rgba(255, 255, 255, 0.274);
+}
+
+#match{
+  margin-top: 10px;
 }
